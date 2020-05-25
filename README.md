@@ -37,7 +37,9 @@ You may use colors within the [ConsoleColor](https://docs.microsoft.com/en-us/do
 
 Other details go in "Personal.json".
 
+```
 {
   "BirthDate": "1995-01-01",
   "LifeExpectancy": "73"
 }
+```
