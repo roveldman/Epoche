@@ -1,6 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace Epoche
 {
@@ -8,34 +11,18 @@ namespace Epoche
     {
         static void Main(string[] args)
         {
+            var filename = "ranges.json";
+            var fileContents = File.ReadAllText(filename);
+
+            var convertOptions = new JsonSerializerOptions();
+            convertOptions.Converters.Add(new JsonStringEnumConverter(JsonNamingPolicy.CamelCase));
+            List<TimeRange> ranges = JsonSerializer.Deserialize<List<TimeRange>>(fileContents, convertOptions);
+
             DateTime birth = new DateTime(1991, 1, 1);
             int lifeExpectancy = 70;
             DateTime death = birth.AddYears(lifeExpectancy);
             DateTime now = DateTime.Now;
             int yearGrouping = 5;
-
-            var ranges = new List<TimeRange>();
-            ranges.Add(new TimeRange
-            {
-                Color = ConsoleColor.DarkYellow,
-                Character = '*',
-                Start = new DateTime(2002, 8, 1),
-                End = new DateTime(2008, 8, 1)
-            });
-            ranges.Add(new TimeRange
-            {
-                Color = ConsoleColor.DarkRed,
-                Character = 'X',
-                Start = new DateTime(2008, 8, 1),
-                End = new DateTime(2009, 8, 1)
-            });
-            ranges.Add(new TimeRange
-            {
-                Color = ConsoleColor.DarkGreen,
-                Character = '$',
-                Start = new DateTime(2010, 1, 1),
-                End = new DateTime(2015, 4, 30)
-            });
 
             for (int year = birth.Year; year < death.Year + 1; year++)
             {
