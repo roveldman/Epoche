@@ -3,7 +3,8 @@
     "Start": "2002-08-01T00:00:00",
     "End": "2008-08-01T00:00:00",
     "Color": "Green",
-    "Character": "*"
+    "Character": "*",
+    "Tag": "Birthdate"
   },
   {
     "Start": "2008-08-01",

@@ -11,7 +11,7 @@ namespace Epoche
     {
         static void Main(string[] args)
         {
-            var filename = "ranges.json";
+            var filename = "Ranges.json";
 
             if(args.Length > 0)
             {
@@ -19,6 +19,7 @@ namespace Epoche
             }
 
             List<TimeRange> ranges = new List<TimeRange>();
+            PersonalDetails personal = null;
 
             try
             {
@@ -26,28 +27,17 @@ namespace Epoche
                 var convertOptions = new JsonSerializerOptions();
                 convertOptions.Converters.Add(new JsonStringEnumConverter(JsonNamingPolicy.CamelCase));
                 ranges = JsonSerializer.Deserialize<List<TimeRange>>(fileContents, convertOptions);
+
+                personal = JsonSerializer.Deserialize<PersonalDetails>(File.ReadAllText("Personal.json"));
             } catch (Exception e)
             {
                 Console.WriteLine(e.Message);
                 return;
             }
 
-            DateTime birth = new DateTime(1991, 1, 1);
-            int lifeExpectancy = 73;
-            if (args.Length > 1)
-            {
-                try
-                {
-                    lifeExpectancy = int.Parse(args[1]);
-                } catch
-                {
-                    Console.WriteLine("Could not parse second argument as life expectancy (integer).");
-                    return;
-                }
-                
-            }
+            DateTime birth = personal.BirthDate;
 
-            DateTime death = birth.AddYears(lifeExpectancy);
+            DateTime death = birth.AddYears(personal.LifeExpectancy);
             DateTime now = DateTime.Now;
             int yearGrouping = 5;
 
@@ -101,6 +91,7 @@ namespace Epoche
                 }
 
             }
+
             Console.ResetColor();
             Console.WriteLine();
         }
