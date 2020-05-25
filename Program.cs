@@ -12,11 +12,25 @@ namespace Epoche
         static void Main(string[] args)
         {
             var filename = "ranges.json";
-            var fileContents = File.ReadAllText(filename);
 
-            var convertOptions = new JsonSerializerOptions();
-            convertOptions.Converters.Add(new JsonStringEnumConverter(JsonNamingPolicy.CamelCase));
-            List<TimeRange> ranges = JsonSerializer.Deserialize<List<TimeRange>>(fileContents, convertOptions);
+            if(args.Length > 0)
+            {
+                filename = args[0];
+            }
+
+            List<TimeRange> ranges = new List<TimeRange>();
+
+            try
+            {
+                var fileContents = File.ReadAllText(filename);
+                var convertOptions = new JsonSerializerOptions();
+                convertOptions.Converters.Add(new JsonStringEnumConverter(JsonNamingPolicy.CamelCase));
+                ranges = JsonSerializer.Deserialize<List<TimeRange>>(fileContents, convertOptions);
+            } catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                return;
+            }
 
             DateTime birth = new DateTime(1991, 1, 1);
             int lifeExpectancy = 70;
@@ -74,8 +88,8 @@ namespace Epoche
                 }
 
             }
-            Console.ForegroundColor = ConsoleColor.White;
-            Console.BackgroundColor = ConsoleColor.Black;
+            Console.ResetColor();
+            Console.WriteLine();
         }
     }
 }
