@@ -10,6 +10,9 @@ otherwise
 ```dotnet run other-json.json```
 .
 
+To specify the length in years of the chart
+```dotnet run ranges.json 80```
+
 ## JSON Structure
 I'd recommend taking a look at "ranges.json" first. It is simply a JSON list with items of the following format (all fields are required).
 

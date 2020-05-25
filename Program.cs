@@ -33,7 +33,20 @@ namespace Epoche
             }
 
             DateTime birth = new DateTime(1991, 1, 1);
-            int lifeExpectancy = 70;
+            int lifeExpectancy = 73;
+            if (args.Length > 1)
+            {
+                try
+                {
+                    lifeExpectancy = int.Parse(args[1]);
+                } catch
+                {
+                    Console.WriteLine("Could not parse second argument as life expectancy (integer).");
+                    return;
+                }
+                
+            }
+
             DateTime death = birth.AddYears(lifeExpectancy);
             DateTime now = DateTime.Now;
             int yearGrouping = 5;
